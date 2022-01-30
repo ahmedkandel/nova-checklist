@@ -1,9 +1,8 @@
 <?php
 
-namespace E2Consult\NovaChecklist;
+namespace Ahmedkandel\NovaChecklist;
 
 use Laravel\Nova\Nova;
-use Laravel\Nova\Events\ServingNova;
 use Illuminate\Support\ServiceProvider;
 
 class FieldServiceProvider extends ServiceProvider
@@ -15,9 +14,9 @@ class FieldServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Nova::serving(function (ServingNova $event) {
-            Nova::script('novachecklists', __DIR__.'/../dist/js/field.js');
-            Nova::style('novachecklists', __DIR__.'/../dist/css/field.css');
+        Nova::serving(function () {
+            Nova::script('nova-checklist', __DIR__.'/../dist/js/field.js');
+            Nova::style('nova-checklist', __DIR__.'/../dist/css/field.css');
         });
     }
 

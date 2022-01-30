@@ -1,6 +1,6 @@
 <?php
 
-namespace E2Consult\NovaChecklist;
+namespace Ahmedkandel\NovaChecklist;
 
 use Laravel\Nova\Fields\Field;
 
@@ -11,7 +11,7 @@ class Checklist extends Field
      *
      * @var string
      */
-    public $component = 'checklist';
+    public $component = 'nova-checklist';
 
     public function logUsers($column = 'name')
     {

@@ -1,10 +1,10 @@
 # Laravel Nova Checklist Field
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/e2consult/novachecklists.svg)](https://packagist.org/packages/e2consult/novachecklists)
-[![License](https://img.shields.io/packagist/l/e2consult/novachecklists.svg)](https://packagist.org/packages/e2consult/novachecklists)
-[![Total Downloads](https://img.shields.io/packagist/dt/e2consult/novachecklists.svg)](https://packagist.org/packages/e2consult/novachecklists)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/ahmedkandel/nova-checklist.svg)](https://packagist.org/packages/ahmedkandel/nova-checklist)
+[![License](https://img.shields.io/packagist/l/ahmedkandel/nova-checklist.svg)](https://packagist.org/packages/ahmedkandel/nova-checklist)
+[![Total Downloads](https://img.shields.io/packagist/dt/ahmedkandel/nova-checklist.svg)](https://packagist.org/packages/ahmedkandel/nova-checklist)
 
-E2Consult is a webdevelopment team based in Oslo, Norway. You'll find more information about us [on our website](https://e2consult.no).
+Based on [encima-io/novachecklists](https://github.com/encima-io/novachecklists)
 
 This package is made to allow you to easily create checklists in Laravel Nova. All you need is a text/json column on you model to store the items.
 
@@ -12,16 +12,14 @@ This package is made to allow you to easily create checklists in Laravel Nova. A
 
 You can install the package via composer:
 
-
 ```bash
-composer require e2consult/novachecklists
+composer require ahmedkandel/nova-checklist
 ```
 
 ## Usage
 
-
 ```php
-use E2Consult\NovaChecklist\Checklist;
+use Ahmedkandel\NovaChecklist\Checklist;
 
 Checklist::make('Tasks')
     ->placeholder('Add another task')   // Defaults to "Add item"
@@ -41,18 +39,17 @@ The `->withPlaceholderCount()` method lets you show the item number when adding 
 
 The `->logUsers()` method allows you to save which user created or completed the task/item. You specify which column on the User model you want to save on task, it default to use the "name" column.
 
-
-![Checklist-form-page](https://raw.githubusercontent.com/e2-consult/novachecklists/master/form-add.png)
+![Checklist-form-page](https://raw.githubusercontent.com/ahmedkandel/nova-checklist/master/form-add.png)
 
 You can edit an existing item by clicking on it.
 
-![Checklist-form-page](https://raw.githubusercontent.com/e2-consult/novachecklists/master/form-edit.png)
+![Checklist-form-page](https://raw.githubusercontent.com/ahmedkandel/nova-checklist/master/form-edit.png)
 
 ### Detail-page
 
 The `->showTimestamps()` method lets you show how long ago a task was completed.
 
-![Checklist-detail-page](https://raw.githubusercontent.com/e2-consult/novachecklists/master/detail.png)
+![Checklist-detail-page](https://raw.githubusercontent.com/ahmedkandel/nova-checklist/master/detail.png)
 
 ### Index-page
 By default this package will only show the task count on the index page.
@@ -61,19 +58,7 @@ The `->showItemStatusOnIndex()` will change the index to show how many tasks are
 
 The `->showCompletionOnIndex()` method will let you show how many percent of the tasks are completed.
 
-![Checklist-detail-page](https://raw.githubusercontent.com/e2-consult/novachecklists/master/index.png)
-
-```php
-use E2Consult\NovaChecklist\Checklist;
-
-Checklist::make('Tasks')
-    ->placeholder('Add task ')
-    ->withPlaceholderCount()
-    ->logUsers()
-    ->showTimestamps()
-    ->showItemStatusOnIndex()
-    ->showCompletionOnIndex(),
-```
+![Checklist-detail-page](https://raw.githubusercontent.com/ahmedkandel/nova-checklist/master/index.png)
 
 ## License
 

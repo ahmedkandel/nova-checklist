@@ -1,6 +1,5 @@
 <template>
     <panel-item :field="field">
-
         <slot>
             <h4 class="font-normal text-80" v-text="field.indexName"></h4>
         </slot>
@@ -12,20 +11,20 @@
 </template>
 
 <script>
-    import Items from './Items.vue';
+import Items from './Items.vue';
 
-    export default {
-        components: {Items},
+export default {
+    components: { Items },
 
-        props: ['field'],
+    props: ['resource', 'resourceName', 'resourceId', 'field'],
 
-        computed:{
-            value(){
-                if(this.field.value){
-                    return JSON.parse(this.field.value) || [];
-                }
-                return [];
-            },
+    computed: {
+        value() {
+            if (this.field.value) {
+                return JSON.parse(this.field.value) || [];
+            }
+            return [];
         },
-    }
+    },
+};
 </script>
