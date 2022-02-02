@@ -23,11 +23,7 @@ export default {
 
     computed: {
         items() {
-            try {
-                return JSON.parse(this.field.value);
-            } catch (e) {
-                return [];
-            }
+            return this.field.value || [];
         },
 
         completed() {

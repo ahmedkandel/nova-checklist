@@ -20,11 +20,7 @@ export default {
 
     computed: {
         value() {
-            try {
-                return JSON.parse(this.field.value);
-            } catch (e) {
-                return [];
-            }
+            return this.field.value || [];
         },
     },
 };

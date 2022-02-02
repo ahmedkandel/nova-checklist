@@ -100,13 +100,25 @@ class Checklist extends Field
     public function canEdit($callback)
     {
         $canEdit = with(app(NovaRequest::class), function ($request) use ($callback) {
-            if ($callback === true || (is_callable($callback) && call_user_func($callback, $request))) {
-                return true;
-            }
-
-            return false;
+            return is_callable($callback) ? call_user_func($callback, $request) : ($callback === true);
         });
 
         return $this->withMeta(['canEdit' => $canEdit]);
+    }
+
+    /**
+     * Hydrate the given attribute on the model based on the incoming request.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  string  $requestAttribute
+     * @param  object  $model
+     * @param  string  $attribute
+     * @return void
+     */
+    protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute)
+    {
+        if ($request->exists($requestAttribute)) {
+            $model->{$attribute} = json_decode($request[$requestAttribute], true);
+        }
     }
 }
