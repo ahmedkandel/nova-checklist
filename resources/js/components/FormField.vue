@@ -1,13 +1,9 @@
 <template>
     <default-field :field="field" :errors="errors" :show-errors="false" :full-width-content="true">
         <template slot="field">
-            <div class="w-full">
-                <items :items="value" :field="field" :edit="true"></items>
+            <items :items="value" :field="field" :edit="true" />
 
-                <p v-if="hasError" class="my-2 text-danger">
-                    {{ firstError }}
-                </p>
-            </div>
+            <p v-if="hasError" class="text-xs mt-2 text-danger">{{ firstError }}</p>
         </template>
     </default-field>
 </template>
@@ -25,15 +21,15 @@ export default {
 
     methods: {
         setInitialValue() {
-            this.value = JSON.parse(this.field.value) || [];
+            try {
+                this.value = JSON.parse(this.field.value);
+            } catch (e) {
+                this.value = [];
+            }
         },
 
         fill(formData) {
             formData.append(this.field.attribute, JSON.stringify(this.value) || []);
-        },
-
-        handleChange(value) {
-            this.value = value;
         },
     },
 };

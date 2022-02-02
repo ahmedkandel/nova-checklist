@@ -1,50 +1,66 @@
 <template>
-    <div class="my-3">
-        <div class="flex justify-between" v-if="$parent.edit">
-            <div class="flex w-full">
-                <checkbox :value="item.id" :checked="isChecked" @input="toggleCheckbox" class="pr-2" />
+    <div class="mb-3">
+        <div v-if="edit" class="flex items-center">
+            <checkbox class="mr-3" :checked="isCompleted" @input="toggleCompleted" />
 
-                <label :for="item.id" class="w-full flex justify-between">
-                    <input class="w-full" v-on:keydown.enter.prevent v-model="item.body" />
-                </label>
-            </div>
+            <input type="text" class="w-full form-control form-input" v-model="item.body" @keydown.enter.prevent />
 
-            <div class="flex">
-                <button @click.prevent="destroy" href="#" type="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" class="sidebar-icon">
-                        <path
-                            fill="var(--sidebar-icon)"
-                            d="M8 6V4c0-1.1.9-2 2-2h4a2 2 0 0 1 2 2v2h5a1 1 0 0 1 0 2h-1v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8H3a1 1 0 1 1 0-2h5zM6 8v12h12V8H6zm8-2V4h-4v2h4zm-4 4a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0v-6a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0v-6a1 1 0 0 1 1-1z"
-                        />
-                    </svg>
-                </button>
-            </div>
+            <button type="button" class="cursor-pointer dim btn btn-link ml-3" @click="deleteItem">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="var(--sidebar-icon)"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    />
+                </svg>
+            </button>
         </div>
 
-        <div v-else class="flex">
-            <div class="flex items-center">
-                <div class="flex" v-if="isChecked">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" class="sidebar-icon">
-                        <path
-                            fill="var(--sidebar-icon)"
-                            d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-2.3-8.7l1.3 1.29 3.3-3.3a1 1 0 0 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-2-2a1 1 0 0 1 1.4-1.42z"
-                        />
-                    </svg>
-                </div>
+        <div v-else class="flex items-center">
+            <template v-if="isCompleted">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 mr-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="var(--success)"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                </svg>
+            </template>
 
-                <div class="flex" v-else>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" class="sidebar-icon">
-                        <path
-                            fill="var(--sidebar-icon)"
-                            d="M4.93 19.07A10 10 0 1 1 19.07 4.93 10 10 0 0 1 4.93 19.07zm1.41-1.41A8 8 0 1 0 17.66 6.34 8 8 0 0 0 6.34 17.66zM13.41 12l1.42 1.41a1 1 0 1 1-1.42 1.42L12 13.4l-1.41 1.42a1 1 0 1 1-1.42-1.42L10.6 12l-1.42-1.41a1 1 0 1 1 1.42-1.42L12 10.6l1.41-1.42a1 1 0 1 1 1.42 1.42L13.4 12z"
-                        />
-                    </svg>
-                </div>
-            </div>
+            <template v-else>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 mr-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="var(--sidebar-icon)"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                </svg>
+            </template>
 
-            <div class="flex flex-row flex-col">
-                <span :class="isChecked ? 'line-through text-80' : ''" v-text="item.body"></span>
-                <span class="text-70 text-xs" v-if="secondLineText" v-text="secondLineText"></span>
+            <div class="flex flex-col">
+                <div :class="isCompleted ? 'line-through text-success' : ''">{{ item.body }}</div>
+                <div v-if="field.showDetails && itemDetails" class="text-xs text-70">{{ itemDetails }}</div>
             </div>
         </div>
     </div>
@@ -52,47 +68,40 @@
 
 <script>
 export default {
-    props: ['item', 'field'],
+    props: ['item', 'field', 'edit'],
 
     methods: {
-        toggleCheckbox() {
+        toggleCompleted() {
             if (this.item.completed_at) {
                 this.item.completed_by = null;
                 this.item.completed_at = null;
             } else {
-                this.item.completed_by = this.field.user;
+                this.item.completed_by = this.field.user || null;
                 this.item.completed_at = Date.now();
             }
         },
 
-        destroy() {
-            this.$emit('deleted', this.id);
+        deleteItem() {
+            this.$emit('deleted');
         },
     },
 
     computed: {
-        isChecked() {
-            return this.item.completed_at != null;
+        isCompleted() {
+            return this.item.completed_at !== null;
         },
 
-        completedAt() {
-            if (this.item.completed_at) {
-                return moment(this.item.completed_at).fromNow();
-            }
-            return null;
+        completedFromNow() {
+            return this.item.completed_at
+                ? moment(this.item.completed_at).locale(window.config.locale).fromNow()
+                : null;
         },
 
-        secondLineText() {
-            if (this.completedAt && this.field.user) {
-                return `${this.field.user}, ${this.completedAt}`;
+        itemDetails() {
+            if (this.item.completed_by && this.completedFromNow) {
+                return `${this.item.completed_by}, ${this.completedFromNow}`;
             }
-            if (this.field.show_timestamps && this.completedAt) {
-                return this.completedAt;
-            }
-            if (this.field.user) {
-                return this.item.completed_by;
-            }
-            return null;
+            return this.completedFromNow;
         },
     },
 };

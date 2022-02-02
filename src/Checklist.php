@@ -13,33 +13,33 @@ class Checklist extends Field
      */
     public $component = 'nova-checklist';
 
-    public function logUsers($column = 'name')
-    {
-        return $this->withMeta(['user' => auth()->user()->{$column}]);
-    }
-
-    public function showTimestamps()
-    {
-        return $this->withMeta(['show_timestamps' => true]);
-    }
-
-    public function showItemStatusOnIndex()
-    {
-        return $this->withMeta(['show_item_status' => true]);
-    }
-
-    public function showCompletionOnIndex()
-    {
-        return $this->withMeta(['show_completion' => true]);
-    }
-
-    public function placeholder($text = null)
+    public function placeholder($text)
     {
         return $this->withMeta(['placeholder' => $text]);
     }
 
-    public function withPlaceholderCount()
+    public function placeholderCounter()
     {
-        return $this->withMeta(['placeholder_count' => true]);
+        return $this->withMeta(['placeholderCounter' => true]);
+    }
+
+    public function storeUserName($column = 'name')
+    {
+        return $this->withMeta(['user' => auth()->user()->{$column}]);
+    }
+
+    public function showDetails()
+    {
+        return $this->withMeta(['showDetails' => true]);
+    }
+
+    public function showItemStatusOnIndex()
+    {
+        return $this->withMeta(['showItemStatus' => true]);
+    }
+
+    public function showCompletionOnIndex()
+    {
+        return $this->withMeta(['showCompletion' => true]);
     }
 }

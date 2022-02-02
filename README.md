@@ -23,9 +23,9 @@ use Ahmedkandel\NovaChecklist\Checklist;
 
 Checklist::make('Tasks')
     ->placeholder('Add another task')   // Defaults to "Add item"
-    ->withPlaceholderCount()            // Not active by default
-    ->logUsers()                        // Not active by default, accepts user-model column. Uses "name" when column isn't provided.
-    ->showTimestamps()                  // Not active by default
+    ->placeholderCounter()              // Not active by default
+    ->storeUserName()                   // Not active by default, accepts user-model column. Uses "name" when column isn't provided.
+    ->showDetails()                     // Not active by default
     ->showItemStatusOnIndex()           // Not active by default
     ->showCompletionOnIndex(),          // Not active by default
 ```
@@ -35,9 +35,9 @@ To use this package you'll need a text or JSON column on you model to save the i
 ### Form-page
 The `->placeholder()` method allows you to specify your placeholder-text for the "add new item field".
 
-The `->withPlaceholderCount()` method lets you show the item number when adding new item. If there is already 5 items, then it will say "Add item 6".
+The `->placeholderCounter()` method lets you show the item number when adding new item. If there is already 5 items, then it will say "Add item 6".
 
-The `->logUsers()` method allows you to save which user created or completed the task/item. You specify which column on the User model you want to save on task, it default to use the "name" column.
+The `->storeUserName()` method allows you to save which user created or completed the task/item. You specify which column on the User model you want to save on task, it default to use the "name" column.
 
 ![Checklist-form-page](https://raw.githubusercontent.com/ahmedkandel/nova-checklist/master/form-add.png)
 
@@ -47,7 +47,7 @@ You can edit an existing item by clicking on it.
 
 ### Detail-page
 
-The `->showTimestamps()` method lets you show how long ago a task was completed.
+The `->showDetails()` method lets you show who completed the task/item and how long ago it was completed.
 
 ![Checklist-detail-page](https://raw.githubusercontent.com/ahmedkandel/nova-checklist/master/detail.png)
 

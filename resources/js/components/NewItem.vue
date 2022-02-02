@@ -1,32 +1,33 @@
 <template>
-    <div>
-        <div class="flex">
-            <input
-                :id="item.id"
-                type="text"
-                name="new-item"
-                class="w-full form-control form-input form-input-bordered"
-                :class="errorClasses"
-                :placeholder="placholderText"
-                v-model="item.body"
-                v-on:keydown.enter.prevent="addItem"
-            />
-            <button
-                class="ml-3"
-                v-show="item.body.length > 0"
-                :disabled="item.body.length == 0"
-                @click.prevent="addItem"
-                type="button"
-                name="new-item"
+    <div class="flex">
+        <input
+            type="text"
+            class="w-full form-control form-input form-input-bordered"
+            :placeholder="placeholder"
+            v-model="item.body"
+            @keydown.enter.prevent="createItem"
+        />
+        <button
+            type="button"
+            class="cursor-pointer dim btn btn-link ml-3"
+            v-show="item.body.length > 0"
+            @click="createItem"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="var(--sidebar-icon)"
             >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" class="sidebar-icon">
-                    <path
-                        fill="var(--sidebar-icon)"
-                        d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm1-9h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2H9a1 1 0 0 1 0-2h2V9a1 1 0 0 1 2 0v2z"
-                    ></path>
-                </svg>
-            </button>
-        </div>
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+            </svg>
+        </button>
     </div>
 </template>
 
@@ -36,47 +37,36 @@ export default {
 
     data() {
         return {
-            item: this.freshItem(),
+            item: this.newItem(),
         };
     },
 
     methods: {
-        freshItem() {
+        newItem() {
             return {
-                id: this.uuidv4(),
                 body: '',
-                created_at: null,
                 created_by: null,
-                completed_at: null,
+                created_at: null,
                 completed_by: null,
+                completed_at: null,
             };
         },
 
-        addItem() {
+        createItem() {
             if (this.item.body.length > 0) {
-                if (this.field.user) {
-                    this.item.created_by = this.field.user;
-                }
+                this.item.created_by = this.field.user || null;
                 this.item.created_at = Date.now();
                 this.$emit('created', this.item);
-                this.item = this.freshItem();
+                this.item = this.newItem();
             }
-        },
-
-        uuidv4() {
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                var r = (Math.random() * 16) | 0,
-                    v = c == 'x' ? r : (r & 0x3) | 0x8;
-                return v.toString(16);
-            });
         },
     },
 
     computed: {
-        placholderText() {
+        placeholder() {
             return (
-                (this.field.placeholder || 'Add item ') +
-                (this.field.placeholder_count ? this.$parent.items.length + 1 : '')
+                (this.field.placeholder || this.__('Add item')) +
+                (this.field.placeholderCounter ? ' ' + (this.$parent.items.length + 1) : '')
             );
         },
     },

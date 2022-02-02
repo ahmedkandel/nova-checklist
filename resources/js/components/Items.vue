@@ -1,10 +1,15 @@
 <template>
-    <div class="w-full">
-        <div v-for="(item, index) in items" :key="item.id">
-            <item :item="item" :field="field" @deleted="remove(index)"></item>
-        </div>
+    <div class="w-full -mb-3">
+        <item
+            v-for="(item, index) in items"
+            :key="index"
+            :item="item"
+            :field="field"
+            :edit="edit"
+            @deleted="remove(index)"
+        />
 
-        <new-item @created="add" :field="field" v-if="edit"></new-item>
+        <new-item @created="add" :field="field" v-if="edit" />
     </div>
 </template>
 
@@ -17,23 +22,13 @@ export default {
 
     props: ['items', 'field', 'edit'],
 
-    data() {
-        return {
-            items: [],
-        };
-    },
-
     methods: {
         add(item) {
             this.items.push(item);
-
-            this.$emit('added');
         },
 
         remove(index) {
             this.items.splice(index, 1);
-
-            this.$emit('removed');
         },
     },
 };
