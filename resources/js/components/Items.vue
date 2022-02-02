@@ -9,7 +9,7 @@
             @deleted="remove(index)"
         />
 
-        <new-item @created="add" :field="field" v-if="edit" />
+        <new-item @created="add" :field="field" v-if="edit && field.canEdit" />
     </div>
 </template>
 

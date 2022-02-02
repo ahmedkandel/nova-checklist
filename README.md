@@ -30,33 +30,43 @@ Checklist::make('Tasks')
     ->showCompletionOnIndex(),          // Not active by default
 ```
 
-To use this package you'll need a text or JSON column on you model to save the items/tasks, as they are persisted as json on your model.
+To use this package you'll need a text or JSON column on you model to save the items, as they are persisted as json on your model.
 
 ### Form-page
 The `->placeholder()` method allows you to specify your placeholder-text for the "add new item field".
 
 The `->placeholderCounter()` method lets you show the item number when adding new item. If there is already 5 items, then it will say "Add item 6".
 
-The `->storeUserName()` method allows you to save which user created or completed the task/item. You specify which column on the User model you want to save on task, it default to use the "name" column.
+The `->storeUserName()` method allows you to save which user created or completed the item. You specify which column on the User model you want to save on item, it default to use the "name" column.
+
+The `->canEdit()` method can be used to allow/disallow add/edit/delete items. By passing a boolean of closure to the method, If true the user can add/edit/delete items, If false the user can only check/uncheck items.
+
+```php
+->canEdit(function ($request) {
+    return $request->isCreateOrAttachRequest() || $request->user()->isAdmin();
+})
+```
 
 ![Checklist-form-page](https://raw.githubusercontent.com/ahmedkandel/nova-checklist/master/form-add.png)
 
-You can edit an existing item by clicking on it.
+You can edit an existing item by clicking on it unless it is not allowed by `->canEdit()` method.
 
 ![Checklist-form-page](https://raw.githubusercontent.com/ahmedkandel/nova-checklist/master/form-edit.png)
 
 ### Detail-page
 
-The `->showDetails()` method lets you show who completed the task/item and how long ago it was completed.
+The `->showDetails()` method lets you show who completed the item and how long ago it was completed.
 
 ![Checklist-detail-page](https://raw.githubusercontent.com/ahmedkandel/nova-checklist/master/detail.png)
 
 ### Index-page
-By default this package will only show the task count on the index page.
+By default this package will only show the items count on the index page.
 
-The `->showItemStatusOnIndex()` will change the index to show how many tasks are completed of the total amount of tasks/items.
+The `->showItemStatusOnIndex()` will change the index to show how many items are completed of the total amount of items.
 
-The `->showCompletionOnIndex()` method will let you show how many percent of the tasks are completed.
+The `->showCompletionOnIndex()` method will let you show how many percent of the items are completed.
+
+When you click on the label a tooltip will all details will be shown.
 
 ![Checklist-detail-page](https://raw.githubusercontent.com/ahmedkandel/nova-checklist/master/index.png)
 

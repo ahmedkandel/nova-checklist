@@ -3,9 +3,19 @@
         <div v-if="edit" class="flex items-center">
             <checkbox class="mr-3" :checked="isCompleted" @input="toggleCompleted" />
 
-            <input type="text" class="w-full form-control form-input" v-model="item.body" @keydown.enter.prevent />
+            <input
+                type="text"
+                class="w-full form-control form-input"
+                v-model="item.body"
+                v-if="field.canEdit"
+                @keydown.enter.prevent
+            />
 
-            <button type="button" class="cursor-pointer dim btn btn-link ml-3" @click="deleteItem">
+            <div v-else class="w-full" :class="isCompleted ? 'line-through' : ''">
+                {{ item.body }}
+            </div>
+
+            <button type="button" class="cursor-pointer dim btn btn-link ml-3" v-if="field.canEdit" @click="deleteItem">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="h-6 w-6"

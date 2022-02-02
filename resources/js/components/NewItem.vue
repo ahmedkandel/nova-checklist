@@ -65,8 +65,7 @@ export default {
     computed: {
         placeholder() {
             return (
-                (this.field.placeholder || this.__('Add item')) +
-                (this.field.placeholderCounter ? ' ' + (this.$parent.items.length + 1) : '')
+                this.field.placeholder + (this.field.placeholderCounter ? ' ' + (this.$parent.items.length + 1) : '')
             );
         },
     },
